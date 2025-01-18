@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Absences extends Model
+class Absence extends Model
 {
     protected $fillable = [
         'user_id',
@@ -14,7 +14,7 @@ class Absences extends Model
         'reason'
     ];
     /**
-     * Get all of the comments for the Absences
+     * Get all of the comments for the Absence
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
