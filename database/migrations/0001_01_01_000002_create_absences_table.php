@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->date('date');
             //M:Morning, B:Break, A:Afternoon
-            $table->enum('time', ['M1','M2','M3','M4','M5','M6','B1','B2','A1','A2','A3','A4','A5','A6']);
+            $table->enum('time', ['M1','M2','M3','M4','M5','M6','R1','R2','T1','T2','T3','T4','T5','T6']);
             $table->string('reason');
             $table->timestamps();
         });

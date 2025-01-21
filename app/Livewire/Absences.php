@@ -12,7 +12,7 @@ class Absences extends Component
     public $absences;
     public $details_modal = false;
     public $absence;
-
+    public $column;
     public function render()
     {
         return view('livewire.absences');
@@ -58,5 +58,9 @@ class Absences extends Component
     {
         $this->details_modal = false;
         $this->absence = null;
+    }
+    public function showspecificabsence($absence_id)
+    {
+        $this->absence = $this->allcolumnsquery()->where('absences.id', $absence_id)->get();
     }
 }
