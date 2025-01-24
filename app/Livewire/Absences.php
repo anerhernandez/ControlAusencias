@@ -15,7 +15,42 @@ class Absences extends Component
     public $details_modal = false;
     public $absence;
     public $column;
-    public $currentabsences = true;
+    public $timerelations = [
+        'M1' => '08:55',
+        'M2' => '09:50',
+        'M3' => '10:45',
+        'R1' => '11:15',
+        'M4' => '12:10',
+        'M5' => '13:05',
+        'M6' => '14:00',
+
+        'T1' => '14:55',
+        'T2' => '15:50',
+        'T3' => '16:45',
+        'R2' => '17:15',
+        'T4' => '18:10',
+        'T5' => '19:05',
+        'T6' => '20:00',
+    ];
+    public $timerelationstuesdays = [
+        'M1' => '08:55',
+        'M2' => '09:50',
+        'M3' => '10:45',
+        'R1' => '11:15',
+        'M4' => '12:10',
+        'M5' => '13:05',
+        'M6' => '14:00',
+
+        'T1' => '15:45',
+        'T2' => '16:30',
+        'T3' => '17:15',
+        'R2' => '17:45',
+        'T4' => '18:30',
+        'T5' => '19:15',
+        'T6' => '20:00',
+    ];
+
+
     public function render()
     {
         return view('livewire.absences');
@@ -41,7 +76,10 @@ class Absences extends Component
     //Mount
     public function mount()
     {
-        $this->absences = $this->allcolumnsquery()->where('date', '=', date('Y/m/d'))->get();
+        $this->absences = $this->allcolumnsquery()
+        ->where('time', '=', $this->currenttime())
+        ->where('date', '=', date('Y/m/d'))
+        ->get();
     }
     public function createAbsence()
     {
@@ -70,6 +108,13 @@ class Absences extends Component
     {
         $this->absence = $this->allcolumnsquery()->where('absences.id', $absence_id)->get();
     }
+    public function currenttime(){
+        foreach ($this->timerelations as $key => $value) {
+            if (date('H:i') <= $value) {
+                return $key;
+            }
+        }
+    }
     public function submitform()
     {
         
@@ -81,35 +126,30 @@ class Absences extends Component
                     ->where('date', $this->filter->date)
                     ->where('time', $this->filter->time)
                     ->get();
-                    $this->currentabsences = false;
                 break;
-
             case '01': // time == null && date != null
                 $this->absences = $this->allcolumnsquery()
                     ->where('date', $this->filter->date)
                     ->get();
-                    if($this->filter->date == date('Y-m-d')){
-                        $this->currentabsences = true;
-                    }
-                    else{
-                        $this->currentabsences = false;
-                    }
                 break;
-
             case '10': // time != null && date == null
                 $this->absences = $this->allcolumnsquery()
                     ->where('time', $this->filter->time)
                     ->get();
-                    $this->currentabsences = false;
                 break;
-
             case '00': // time == null && date == null
             default:
                 $this->absences = $this->allcolumnsquery()
                     ->where('date', '=', date('Y/m/d'))
                     ->get();
-                    $this->currentabsences = true;
                 break;
         }
+    }
+    //Vista admin
+    public function editabsence(){
+
+    }
+    public function deletebsence(){
+        
     }
 }

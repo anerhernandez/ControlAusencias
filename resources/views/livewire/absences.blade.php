@@ -36,14 +36,8 @@
         </form>
     </div>
     @if ($absences->isEmpty())
-        <p colspan="4">No absences found.</p>
+        <p colspan="4">No se han encontrado ausencias</p>
     @else
-    @if ($currentabsences)
-    <p class="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl underline text-center pb-2"> <b>Ausencias encontradas para el día de hoy {{date('Y/m/d')}}</b></p>
-    @else
-    <p class="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl underline text-center pb-2"> <b>Ausencias encontradas</b></p>
-    @endif
-
     <div class="container overflow-hidden dark:rounded-lg rounded">
         <table class="text-left w-full border-collapse rounded ">
             <thead class="dark:bg-gray-900 flex bg-neutral-200 dark:text-white w-full ">
