@@ -2,9 +2,6 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Dashboard') }}
-            @role('Admin')
-            <button wire:click="privateview" class="ml-2 text-red-400">Vista privada</button>
-            @endrole
         </h2>
     </x-slot>
 
@@ -12,7 +9,14 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <!--VISTA ADMIN -->
+                    @role('Admin')
+                        @livewire('absences-admin-view')
+                    @endrole
+                    <!--VISTA NORMAL -->
+                    @role('teacher')
                     @livewire('absences')
+                    @endrole
                 </div>
             </div>
         </div>

@@ -14,7 +14,6 @@ class Absences extends Component
     public $absences;
     public $details_modal = false;
     public $absence;
-    public $column;
     public $timerelations = [
         'M1' => '08:55',
         'M2' => '09:50',
@@ -145,11 +144,6 @@ class Absences extends Component
                 break;
         }
     }
-    //Vista admin
-    public function editabsence(){
-
-    }
-    public function deletebsence(){
-        
-    }
+      
+    
 }
