@@ -14,6 +14,8 @@ class Absences extends Component
     public $absences;
     public $details_modal = false;
     public $absence;
+    public $add_absence = false;
+
     public $timerelations = [
         'M1' => '08:55',
         'M2' => '09:50',
@@ -76,6 +78,8 @@ class Absences extends Component
     public function mount()
     {
         $this->absences = $this->getCurrentAbsences();
+        $this->filter->time = $this->currenttime();
+        $this->filter->date = date('d/m/Y');
     }
     public function getCurrentAbsences(){
         return $this->allcolumnsquery()
@@ -83,19 +87,13 @@ class Absences extends Component
         ->where('date', '=', date('Y/m/d'))
         ->get();
     }
-    public function clearfields(){
-        $this->filter->time = "";
-        $this->filter->date = "";
+    public function resetfilters(){
+        $this->absences = $this->getCurrentAbsences();
+        $this->clearfields();
     }
-    public function createAbsence()
-    {
-        Absence::create([
-            'user_id' => Auth::id(),
-            'date' => $this->date,
-            'time' => $this->time,
-            'reason' => $this->reason
-        ]);
-        $this->absences = Absence::all();
+    public function clearfields(){
+        $this->filter->time = null;
+        $this->filter->date = null;
     }
     // Function to open the details modal
     public function openDetailsModal($absence_id)
@@ -108,6 +106,27 @@ class Absences extends Component
     {
         $this->details_modal = false;
         $this->absence = null;
+    }
+    //Open and close create foreign absence
+    public function openCreateAbsence()
+    {
+        $this->add_absence = true;
+    }
+    public function closeCreateAbsence()
+    {
+        $this->add_absence = false;
+        $this->clearfields();
+    }
+    public function createAbsence()
+    {
+        Absence::create([
+            'user_id' => Auth::id(),
+            'date' => $this->filter->date,
+            'time' => $this->filter->time,
+            'reason' => $this->filter->reason
+        ]);
+        $this->absences = $this->allcolumnsquery()->get();
+        $this->closeCreateAbsence();
     }
     //Function to show specific absence
     public function showspecificabsence($absence_id)
