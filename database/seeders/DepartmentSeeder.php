@@ -18,5 +18,17 @@ class DepartmentSeeder extends Seeder
         DB::table('departments')->insert([
             'dp_name' => 'IT',
         ]);
+        DB::table('departments')->insert([
+            'dp_name' => 'MATH',
+        ]);
+        DB::table('departments')->insert([
+            'dp_name' => 'LAN',
+        ]);
+        DB::table('departments')->insert([
+            'dp_name' => 'SCI',
+        ]);
+        DB::table('departments')->insert([
+            'dp_name' => 'SPO',
+        ]);
     }
 }

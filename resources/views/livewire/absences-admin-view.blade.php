@@ -1,4 +1,6 @@
 <div wire:poll class="text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px]">
+    <h2 class="text-center text-[12px] md:text-[14px] lg:text-[16px] xl:text-[18px] 2xl:text-[22px]">ESTO ES UNA VISTA PRIVADA QUE SOLO VERÁ EL <b class="text-red-500">ADMINISTRADOR</b></h2>
+    <button wire:click="openCreateAdminAbsence" class="btn-default overflow-hidden relative bg-sky-300 text-gray-900 p-2 mb-5 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-neutral-100 hover:bg-gradient-to-t hover:from-sky-400 before:to-sky-50 0 dark:border-gray-700 hover:-translate-y-[3px]">Añadir una falta</button>
     @if ($absences->isEmpty())
         <p colspan="4">No se han encontrado ausencias</p>
     @else
@@ -62,7 +64,7 @@
                     <button wire:click="editabsence" class="btn-default overflow-hidden relative bg-yellow-300 dark:bg-yellow-300 text-gray-900 p-2 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-yellow-300 hover:bg-gradient-to-t  hover:from-yellow-400 before:to-yellow-100 hover:-translate-y-[3px]">
                         Editar
                     </button>
-                    <button wire:click="deletebsence" wire:confirm.prevent="¿Está seguro de que desea eliminar esta ausencia?" class="btn-default overflow-hidden relative bg-red-500 dark:bg-red-500 text-white p-2 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-red-500 hover:bg-gradient-to-t  hover:from-red-500 before:to-red-600 hover:-translate-y-[3px]">
+                    <button wire:click.prevent="deleteAbsence" wire:confirm.prevent="¿Está seguro de que desea eliminar esta ausencia?" class="btn-default overflow-hidden relative bg-red-500 dark:bg-red-500 text-white p-2 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-red-500 hover:bg-gradient-to-t  hover:from-red-500 before:to-red-600 hover:-translate-y-[3px]">
                         Eliminar
                     </button>
                 </div>
@@ -76,5 +78,62 @@
           </div>
         </div>
       </div>
+    @endif
+    @if ($add_admin_absence)
+        <div class="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 py-10">
+            <div class="max-h-full w-full lg:max-w-xl lg:p-0 px-10 max-w-fit overflow-y-auto sm:rounded-2xl dark:bg-slate-800 bg-gray-100">
+                <div class="w-full">
+                    <div class="py-12 max-w-[400px] mx-auto">
+                        <h1 class="mb-5 text-center font-bold underline">Campos para rellenar ausencia ajena</h1>
+                        <form wire:submit="submitform" action="#">
+                            <div id="Inputs" class="flex justify-evenly p-5">
+                                <div class="text-center w-full">
+                                    <label for="teacher">Profesor</label><br>
+                                    <select id="teacher" name="teacher" wire:model="filter.teacher" class="bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]">
+                                        <option selected value={{null}}>Profesores</option>
+                                        @foreach ($this->teachers as $teacher)
+                                            <option value='{{$teacher->name}}'>{{$teacher->name}}</option>
+                                        @endforeach
+                                    </select><br><br>
+                                    <label for="time">Hora</label><br>
+                                    <select id="time" name="time" wire:model="filter.time" class="bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]">
+                                        <option selected value={{null}}>Hora</option>
+                                        <option value="M1">M1 (Mañana)</option>
+                                        <option value="M2">M2 (Mañana)</option>
+                                        <option value="M3">M3 (Mañana)</option>
+                                        <option value="R1">R1 (Recreo Mañana)</option>
+                                        <option value="M4">M4 (Mañana)</option>
+                                        <option value="M5">M5 (Mañana)</option>
+                                        <option value="M6">M6 (Mañana)</option>
+                                        <option value="T1">T1 (Tarde)</option>
+                                        <option value="T2">T2 (Tarde)</option>
+                                        <option value="T3">T3 (Tarde)</option>
+                                        <option value="R2">R2 (Recreo Tarde)</option>
+                                        <option value="T4">T4 (Tarde)</option>
+                                        <option value="T5">T5 (Tarde)</option>
+                                        <option value="T6">T6 (Tarde)</option>
+                                    </select><br><br>
+                                    <label for="date">Fecha</label><br>
+                                    <input type="date" id="date" name="date" wire:model="filter.date"  class="bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]">
+                                    <br><br>
+                                    <label for="razon">Razón</label><br>
+                                    <textarea id="razon" name="razon" wire:model="filter.reason" placeholder="Razón por la que faltará" class="w-full bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="space-y-4 ">
+                            <div class="text-center">
+                                <button wire:click="createAdminAbsence" class="btn-default overflow-hidden relative bg-red-500 text-white p-2 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-red-500 dark:border-gray-700 hover:bg-gradient-to-t hover:from-red-400 before:to-red-700 hover:dark:from-red-700 before:dark:to-red-700 hover:-translate-y-[3px]">
+                                    Añadir falta
+                                </button>
+                                <button wire:click="closeCreateAdminAbsence" class="btn-default overflow-hidden relative bg-neutral-200 dark:bg-slate-600 dark:text-white text-gray-900 p-2 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-neutral-100 dark:border-gray-700 hover:bg-gradient-to-t hover:from-neutral-300 before:to-neutral-50 hover:dark:from-red-600 before:dark:to-slate-700 hover:-translate-y-[3px]">
+                                    Salir de añadir ausencia
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endif
 </div>

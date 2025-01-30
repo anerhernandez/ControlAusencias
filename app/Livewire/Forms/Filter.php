@@ -8,4 +8,6 @@ class Filter extends Form
 {
     public $date;
     public $time;
+    public $reason;
+    public $teacher;
 }

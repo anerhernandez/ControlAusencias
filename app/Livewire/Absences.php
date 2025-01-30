@@ -75,10 +75,17 @@ class Absences extends Component
     //Mount
     public function mount()
     {
-        $this->absences = $this->allcolumnsquery()
+        $this->absences = $this->getCurrentAbsences();
+    }
+    public function getCurrentAbsences(){
+        return $this->allcolumnsquery()
         ->where('time', '=', $this->currenttime())
         ->where('date', '=', date('Y/m/d'))
         ->get();
+    }
+    public function clearfields(){
+        $this->filter->time = "";
+        $this->filter->date = "";
     }
     public function createAbsence()
     {
@@ -108,15 +115,23 @@ class Absences extends Component
         $this->absence = $this->allcolumnsquery()->where('absences.id', $absence_id)->get();
     }
     public function currenttime(){
-        foreach ($this->timerelations as $key => $value) {
-            if (date('H:i') <= $value) {
-                return $key;
+        //Checks if today is a Tuesday, to use Tuesday times
+        if (date("w") === 2) {
+            foreach ($this->timerelationstuesdays as $key => $value) {
+                if (date('H:i') <= $value) {
+                    return $key;
+                }
+            }
+        }else{
+            foreach ($this->timerelations as $key => $value) {
+                if (date('H:i') <= $value) {
+                    return $key;
+                }
             }
         }
     }
     public function submitform()
     {
-        
         $times = ['M1','M2','M3','M4','M5','M6','R1','R2','T1','T2','T3','T4','T5','T6'];
         $switchCondition = (in_array($this->filter->time, $times) ? '1' : '0') . ($this->filter->date != null && $this->filter->date != "" ? '1' : '0');
         switch ($switchCondition) {
@@ -141,9 +156,8 @@ class Absences extends Component
                 $this->absences = $this->allcolumnsquery()
                     ->where('date', '=', date('Y/m/d'))
                     ->get();
+                    $this->clearfields();
                 break;
         }
     }
-      
-    
 }
