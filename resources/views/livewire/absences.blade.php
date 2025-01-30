@@ -25,7 +25,7 @@
                 </div>
                 <div class="text-center">
                     <label for="date">Fecha</label><br>
-                    <input type="date" id="date" name="date" wire:model="filter.date"  value="{{date('Y-m-d')}}" class="bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]">
+                    <input type="date" id="date" name="date" wire:model="filter.date"  class="bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]">
                 </div>
             </div>
             <div class="text-center mb-2">
@@ -119,25 +119,42 @@
                             <div id="Inputs" class="flex justify-evenly p-5">
                                 <div class="text-center w-full">
                                     <label for="time">Hora</label><br>
-                                    <select id="time" name="time" wire:model="filter.time" class="bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]">
-                                        <option selected value={{null}}>Hora</option>
-                                        <option value="M1">M1 (Mañana)</option>
-                                        <option value="M2">M2 (Mañana)</option>
-                                        <option value="M3">M3 (Mañana)</option>
-                                        <option value="R1">R1 (Recreo Mañana)</option>
-                                        <option value="M4">M4 (Mañana)</option>
-                                        <option value="M5">M5 (Mañana)</option>
-                                        <option value="M6">M6 (Mañana)</option>
-                                        <option value="T1">T1 (Tarde)</option>
-                                        <option value="T2">T2 (Tarde)</option>
-                                        <option value="T3">T3 (Tarde)</option>
-                                        <option value="R2">R2 (Recreo Tarde)</option>
-                                        <option value="T4">T4 (Tarde)</option>
-                                        <option value="T5">T5 (Tarde)</option>
-                                        <option value="T6">T6 (Tarde)</option>
-                                    </select><br><br>
+                                    <div id="time" name="time" class="flex justify-evenly">
+                                        <div class="text-left">
+                                            <input type="checkbox" name="M1" id="M1" value="M1">
+                                            <label for="M1">M1 (Mañana)</label><br>
+                                            <input type="checkbox" name="M2" id="M2" value="M2">
+                                            <label for="M2">M2 (Mañana)</label><br>
+                                            <input type="checkbox" name="M3" id="M3" value="M3">
+                                            <label for="M3">M3 (Mañana)</label><br>
+                                            <input type="checkbox" name="R1" id="R1" value="R1">
+                                            <label for="R1">R1 (Recreo Mañana)</label><br>
+                                            <input type="checkbox" name="M4" id="M4" value="M4">
+                                            <label for="M4">M4 (Mañana)</label><br>
+                                            <input type="checkbox" name="M5" id="M5" value="M5">
+                                            <label for="M5">M5 (Mañana)</label><br>
+                                            <input type="checkbox" name="M6" id="M6" value="M6">
+                                            <label for="M6">M6 (Mañana)</label><br>
+                                        </div>
+                                        <div class="text-left">
+                                            <input type="checkbox" name="T1" id="T1" value="T1">
+                                            <label for="T1">T1 (Tarde)</label><br>
+                                            <input type="checkbox" name="T2" id="T2" value="T2">
+                                            <label for="T2">T2 (Tarde)</label><br>
+                                            <input type="checkbox" name="T3" id="T3" value="T3">
+                                            <label for="T3">T3 (Tarde)</label><br>
+                                            <input type="checkbox" name="R2" id="R2" value="R2">
+                                            <label for="R2">R2 (Recreo Tarde)</label><br>
+                                            <input type="checkbox" name="T4" id="T4" value="T4">
+                                            <label for="T4">T4 (Tarde)</label><br>
+                                            <input type="checkbox" name="T5" id="T5" value="T5">
+                                            <label for="T5">T5 (Tarde)</label><br>
+                                            <input type="checkbox" name="T6" id="T6" value="T6">
+                                            <label for="T6">T6 (Tarde)</label><br>
+                                        </div>
+                                    </div><br><br>
                                     <label for="date">Fecha</label><br>
-                                    <input type="date" id="date" name="date" wire:model="filter.date"  class="bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]">
+                                    <input required type="date" id="date" name="date" wire:model="filter.date"  class="bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]">
                                     <br><br>
                                     <label for="razon">Razón</label><br>
                                     <textarea id="razon" name="razon" wire:model="filter.reason" placeholder="Razón por la que faltará" class="w-full bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]"></textarea>
