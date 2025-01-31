@@ -1,6 +1,10 @@
 <div wire:poll class="text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px]">
-    <h2 class="text-center text-[12px] md:text-[14px] lg:text-[16px] xl:text-[18px] 2xl:text-[22px]">ESTO ES UNA VISTA PRIVADA QUE SOLO VERÁ EL <b class="text-red-500">ADMINISTRADOR</b></h2>
-    <button wire:click="openCreateAdminAbsence" class="btn-default overflow-hidden relative bg-sky-300 text-gray-900 p-2 mb-5 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-neutral-100 hover:bg-gradient-to-t hover:from-sky-400 before:to-sky-50 0 dark:border-gray-700 hover:-translate-y-[3px]">Añadir una falta</button>
+    <div class="text-center">
+        <h2 class=" text-[12px] md:text-[14px] lg:text-[16px] xl:text-[18px] 2xl:text-[22px]">ESTO ES UNA VISTA PRIVADA QUE SOLO VERÁ EL <b class="text-red-500">ADMINISTRADOR</b></h2>
+        <button wire:click="openCreateAdminAbsence" class="btn-default overflow-hidden relative bg-sky-300 text-gray-900 p-2 mb-5 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-neutral-100 hover:bg-gradient-to-t hover:from-sky-400 before:to-sky-50 0 dark:border-gray-700 hover:-translate-y-[3px]">
+            Añadir una falta
+        </button>
+    </div>
     <div class="text-gray-900 dark:text-gray-100 text-center">
         <form wire:submit="submitform" action="#">
             <div id="Inputs" class="flex justify-evenly p-10">

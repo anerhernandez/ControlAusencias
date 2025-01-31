@@ -151,8 +151,11 @@ class Absences extends Component
             $this->closeCreateAbsence();
             $this->filter->time = $this->currenttime();
             $this->created = true;
+        }
     }
-}
+    public function editabsence(){
+
+    }
     //Function to show specific absence
     public function showspecificabsence($absence_id)
     {
