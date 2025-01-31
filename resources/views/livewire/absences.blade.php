@@ -37,6 +37,9 @@
                 <span class="relative">Reiniciar filtros</span>
             </button>
         </form>
+        @if ($created)
+        <p class="mb-6">Se han creado las ausencias</p>   
+        @endif
     </div>
     @if ($absences->isEmpty())
         <p colspan="4">No se han encontrado ausencias</p>
@@ -121,35 +124,35 @@
                                     <label for="time">Hora</label><br>
                                     <div id="time" name="time" class="flex justify-evenly">
                                         <div class="text-left">
-                                            <input type="checkbox" name="M1" id="M1" value="M1">
+                                            <input type="checkbox" name="M1" wire:model="times" id="M1" value="M1">
                                             <label for="M1">M1 (Mañana)</label><br>
-                                            <input type="checkbox" name="M2" id="M2" value="M2">
+                                            <input type="checkbox" name="M2" wire:model="times" id="M2" value="M2">
                                             <label for="M2">M2 (Mañana)</label><br>
-                                            <input type="checkbox" name="M3" id="M3" value="M3">
+                                            <input type="checkbox" name="M3" wire:model="times" id="M3" value="M3">
                                             <label for="M3">M3 (Mañana)</label><br>
-                                            <input type="checkbox" name="R1" id="R1" value="R1">
+                                            <input type="checkbox" name="R1" wire:model="times" id="R1" value="R1">
                                             <label for="R1">R1 (Recreo Mañana)</label><br>
-                                            <input type="checkbox" name="M4" id="M4" value="M4">
+                                            <input type="checkbox" name="M4" wire:model="times" id="M4" value="M4">
                                             <label for="M4">M4 (Mañana)</label><br>
-                                            <input type="checkbox" name="M5" id="M5" value="M5">
+                                            <input type="checkbox" name="M5" wire:model="times" id="M5" value="M5">
                                             <label for="M5">M5 (Mañana)</label><br>
-                                            <input type="checkbox" name="M6" id="M6" value="M6">
+                                            <input type="checkbox" name="M6" wire:model="times" id="M6" value="M6">
                                             <label for="M6">M6 (Mañana)</label><br>
                                         </div>
                                         <div class="text-left">
-                                            <input type="checkbox" name="T1" id="T1" value="T1">
+                                            <input type="checkbox" name="T1" wire:model="times" id="T1" value="T1">
                                             <label for="T1">T1 (Tarde)</label><br>
-                                            <input type="checkbox" name="T2" id="T2" value="T2">
+                                            <input type="checkbox" name="T2" wire:model="times" id="T2" value="T2">
                                             <label for="T2">T2 (Tarde)</label><br>
-                                            <input type="checkbox" name="T3" id="T3" value="T3">
+                                            <input type="checkbox" name="T3" wire:model="times" id="T3" value="T3">
                                             <label for="T3">T3 (Tarde)</label><br>
-                                            <input type="checkbox" name="R2" id="R2" value="R2">
+                                            <input type="checkbox" name="R2" wire:model="times" id="R2" value="R2">
                                             <label for="R2">R2 (Recreo Tarde)</label><br>
-                                            <input type="checkbox" name="T4" id="T4" value="T4">
+                                            <input type="checkbox" name="T4" wire:model="times" id="T4" value="T4">
                                             <label for="T4">T4 (Tarde)</label><br>
-                                            <input type="checkbox" name="T5" id="T5" value="T5">
+                                            <input type="checkbox" name="T5" wire:model="times" id="T5" value="T5">
                                             <label for="T5">T5 (Tarde)</label><br>
-                                            <input type="checkbox" name="T6" id="T6" value="T6">
+                                            <input type="checkbox" name="T6" wire:model="times" id="T6" value="T6">
                                             <label for="T6">T6 (Tarde)</label><br>
                                         </div>
                                     </div><br><br>
@@ -166,7 +169,7 @@
                                 <button wire:click="createAbsence" class="btn-default overflow-hidden relative bg-red-500 text-white p-2 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-red-500 dark:border-gray-700 hover:bg-gradient-to-t hover:from-red-400 before:to-red-700 hover:dark:from-red-700 before:dark:to-red-700 hover:-translate-y-[3px]">
                                     Añadir falta
                                 </button>
-                                <button wire:click="closeCreateAbsence" class="btn-default overflow-hidden relative bg-neutral-200 dark:bg-slate-600 dark:text-white text-gray-900 p-2 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-neutral-100 dark:border-gray-700 hover:bg-gradient-to-t hover:from-neutral-300 before:to-neutral-50 hover:dark:from-red-600 before:dark:to-slate-700 hover:-translate-y-[3px]">
+                                <button wire:click="closeCreateAbsence" class="btn-default overflow-hidden relative bg-neutral-200 dark:bg-slate-600 dark:text-white text-gray-900 p-2 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-neutral-100 dark:border-gray-700 hover:bg-gradient-to-t hover:from-neutral-300 before:to-neutral-50 hover:dark:from-slate-600 before:dark:to-slate-700 hover:-translate-y-[3px]">
                                     Salir de añadir ausencia
                                 </button>
                             </div>

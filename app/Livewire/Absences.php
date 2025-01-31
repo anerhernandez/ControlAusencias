@@ -16,6 +16,7 @@ class Absences extends Component
     public $absence;
     public $add_absence = false;
     public $times = [];
+    public $created = false;
     public $timerelations = [
         'M1' => '08:55',
         'M2' => '09:50',
@@ -79,18 +80,22 @@ class Absences extends Component
     {
         $this->absences = $this->getCurrentAbsences();
         $this->filter->time = $this->currenttime();
+        $this->created = false;
     }
+    //Returns all current (this day and time) absences
     public function getCurrentAbsences(){
         return $this->allcolumnsquery()
         ->where('time', '=', $this->currenttime())
         ->where('date', '=', date('Y/m/d'))
         ->get();
     }
+    //Resets all parameters of searching and inserting
     public function resetfilters(){
         $this->absences = $this->getCurrentAbsences();
         $this->clearfields();
         $this->filter->time = $this->currenttime();
     }
+    //Clears searching fields
     public function clearfields(){
         $this->filter->time = null;
         $this->filter->date = null;
@@ -117,21 +122,22 @@ class Absences extends Component
         $this->add_absence = false;
         $this->clearfields();
         $this->filter->time = $this->currenttime();
+        $this->times = null;
     }
     public function createAbsence()
     {
-        // Absence::create([
-        //     'user_id' => Auth::id(),
-        //     'date' => $this->filter->date,
-        //     'time' => $this->filter->time,
-        //     'reason' => $this->filter->reason
-        // ]);
-        // $this->absences = $this->allcolumnsquery()->get();
-        // $this->closeCreateAbsence();
-        // $this->filter->time = $this->currenttime();
-
-        
-
+        foreach ($this->times as $time) {
+            Absence::create([
+                'user_id' => Auth::id(),
+                'date' => $this->filter->date,
+                'time' => $time,
+                'reason' => $this->filter->reason
+            ]);
+        }
+        $this->absences = $this->getCurrentAbsences();
+        $this->closeCreateAbsence();
+        $this->filter->time = $this->currenttime();
+        $this->created = true;
     }
     //Function to show specific absence
     public function showspecificabsence($absence_id)
@@ -182,6 +188,6 @@ class Absences extends Component
                     ->get();
                     $this->clearfields();
                 break;
-        }
+            }
     }
 }

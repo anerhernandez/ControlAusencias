@@ -4,8 +4,6 @@ namespace App\Livewire;
 
 use App\Livewire\Absences;
 use App\Models\Absence;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AbsencesAdminView extends Absences
@@ -20,9 +18,9 @@ class AbsencesAdminView extends Absences
         return view('livewire.absences-admin-view');
     }
     public function mount(){
-        $this->absences = $this->allcolumnsquery()
-        ->get();
+        $this->absences = $this->allcolumnsquery()->where('date', '=', date('Y/m/d'))->get();
         $this->teachers = DB::table('users')->whereNotLike('id', 1)->get();
+        $this->created = false;
     }
     public function editAbsence(){
         $this->closeDetailsModal();
@@ -31,14 +29,15 @@ class AbsencesAdminView extends Absences
     //Delete absence
     public function deleteAbsence(){
         DB::table('absences')->where('id', '=', $this->absence[0]->absence_id)->delete();
-        $this->absences = $this->allcolumnsquery()->get();
+        $this->absences = $this->allcolumnsquery()->where('date', '=', date('Y/m/d'))->get();
         $this->closeDetailsModal();
     }
-    //Open and close create foreign absence
+    //Open create foreign absence
     public function openCreateAdminAbsence()
     {
         $this->add_admin_absence = true;
     }
+    //Cloes create foreign absence
     public function closeCreateAdminAbsence()
     {
         $this->add_admin_absence = false;
@@ -52,14 +51,16 @@ class AbsencesAdminView extends Absences
     public function createAdminAbsence(){
 
         $teacher_id = DB::table('users')->where("name", "=", $this->filter->teacher)->select("id")->get();
-
-        Absence::create([
-            'user_id' => $teacher_id[0]->id,
-            'date' => $this->filter->date,
-            'time' => $this->filter->time,
-            'reason' => $this->filter->reason
-        ]);
-        $this->absences = $this->allcolumnsquery()->get();
+        foreach ($this->times as $time) {
+            Absence::create([
+                'user_id' => $teacher_id[0]->id,
+                'date' => $this->filter->date,
+                'time' => $time,
+                'reason' => $this->filter->reason
+            ]);
+        }
+        $this->absences = $this->allcolumnsquery()->where('date', '=', date('Y/m/d'))->get();
         $this->closeCreateAdminAbsence();
+        $this->created = true;
     }
 }
