@@ -61,6 +61,7 @@ class Absences extends Component
     // Query to get all important columns from all tables
     public function allcolumnsquery()
     {
+        $this->inserterror = false;
         return DB::table('users')
             ->join('absences', 'users.id', '=', 'absences.user_id')
             ->join('departments', 'users.department_id', '=', 'departments.id')
@@ -73,7 +74,7 @@ class Absences extends Component
                 'departments.dp_name as department_name',
                 'absences.date',
                 'absences.time',
-                'absences.reason'
+                'absences.comment'
             );
     }
     //Mount
@@ -83,7 +84,6 @@ class Absences extends Component
         $this->filter->time = $this->currenttime();
         $this->filter->date = date('Y-m-d');
         $this->created = false;
-        $this->inserterror = false;
     }
     //Returns all current (this day and time) absences
     public function getCurrentAbsences(){
@@ -144,7 +144,7 @@ class Absences extends Component
                     'user_id' => Auth::id(),
                     'date' => $this->filter->date,
                     'time' => $time,
-                    'reason' => $this->filter->reason
+                    'comment' => $this->filter->comment
                 ]);
             }
             $this->absences = $this->getCurrentAbsences();

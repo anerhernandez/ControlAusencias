@@ -20,7 +20,6 @@ class AbsencesAdminView extends Absences
     public function mount(){
         $this->absences = $this->allcolumnsquery()->where('date', '=', date('Y/m/d'))->get();
         $this->teachers = DB::table('users')->whereNotLike('id', 1)->get();
-        $this->filter->time = $this->currenttime();
         $this->filter->date = date('Y-m-d');
         $this->created = false;
         $this->inserterror = false;
@@ -46,12 +45,16 @@ class AbsencesAdminView extends Absences
     {
         $this->add_admin_absence = false;
         $this->filter->date = date('Y-m-d');
-        $this->filter->time = $this->currenttime();
     }
     public function clearadminfields(){
         $this->clearfields();
         $this->filter->teacher = "";
-        $this->filter->reason = "";
+        $this->filter->comment = "";
+    }
+    public function resetfiltersadmin(){
+        $this->absences = $this->allcolumnsquery()->where('date', '=', date('Y/m/d'))->get();
+        $this->clearfields();
+        $this->filter->date = date('Y-m-d');
     }
     public function createAdminAbsence(){
 
@@ -70,7 +73,7 @@ class AbsencesAdminView extends Absences
                     'user_id' => $teacher_id[0]->id,
                     'date' => $this->filter->date,
                     'time' => $time,
-                    'reason' => $this->filter->reason
+                    'comment' => $this->filter->comment
                 ]);
             }
             $this->absences = $this->allcolumnsquery()->where('date', '=', date('Y/m/d'))->get();

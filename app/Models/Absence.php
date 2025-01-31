@@ -11,7 +11,7 @@ class Absence extends Model
         'user_id',
         'date',
         'time',
-        'reason'
+        'comment'
     ];
     /**
      * Get all of the comments for the Absence
