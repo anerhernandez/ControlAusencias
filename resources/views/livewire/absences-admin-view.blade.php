@@ -41,6 +41,9 @@
         @if ($created)
         <p class="mb-6">Se han creado las ausencias</p>   
         @endif
+        @if ($inserterror)
+        <p class="mb-6 text-red-600">Rellene todos los campos para insertar ausencias</p>   
+        @endif
     </div>
     @if ($absences->isEmpty())
         <p colspan="4">No se han encontrado ausencias</p>
@@ -184,7 +187,7 @@
                                 <button wire:click="createAdminAbsence" class="btn-default overflow-hidden relative bg-red-500 text-white p-2 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-red-500 dark:border-gray-700 hover:bg-gradient-to-t hover:from-red-400 before:to-red-700 hover:dark:from-red-700 before:dark:to-red-700 hover:-translate-y-[3px]">
                                     Añadir falta
                                 </button>
-                                <button wire:click="closeCreateAdminAbsence" class="btn-default overflow-hidden relative bg-neutral-200 dark:bg-slate-600 dark:text-white text-gray-900 p-2 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-neutral-100 dark:border-gray-700 hover:bg-gradient-to-t hover:from-neutral-300 before:to-neutral-50 hover:dark:from-red-600 before:dark:to-slate-700 hover:-translate-y-[3px]">
+                                <button wire:click="closeCreateAdminAbsence" class="btn-default overflow-hidden relative bg-neutral-200 dark:bg-slate-600 dark:text-white text-gray-900 p-2 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-neutral-100 dark:border-gray-700 hover:bg-gradient-to-t hover:from-neutral-300 before:to-neutral-50 hover:dark:from-slate-600 before:dark:to-slate-700 hover:-translate-y-[3px]">
                                     Salir de añadir ausencia
                                 </button>
                             </div>

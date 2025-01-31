@@ -20,7 +20,10 @@ class AbsencesAdminView extends Absences
     public function mount(){
         $this->absences = $this->allcolumnsquery()->where('date', '=', date('Y/m/d'))->get();
         $this->teachers = DB::table('users')->whereNotLike('id', 1)->get();
+        $this->filter->time = $this->currenttime();
+        $this->filter->date = date('Y-m-d');
         $this->created = false;
+        $this->inserterror = false;
     }
     public function editAbsence(){
         $this->closeDetailsModal();
@@ -36,12 +39,14 @@ class AbsencesAdminView extends Absences
     public function openCreateAdminAbsence()
     {
         $this->add_admin_absence = true;
+        $this->clearadminfields();
     }
     //Cloes create foreign absence
     public function closeCreateAdminAbsence()
     {
         $this->add_admin_absence = false;
-        $this->clearadminfields();
+        $this->filter->date = date('Y-m-d');
+        $this->filter->time = $this->currenttime();
     }
     public function clearadminfields(){
         $this->clearfields();
@@ -50,17 +55,28 @@ class AbsencesAdminView extends Absences
     }
     public function createAdminAbsence(){
 
-        $teacher_id = DB::table('users')->where("name", "=", $this->filter->teacher)->select("id")->get();
-        foreach ($this->times as $time) {
-            Absence::create([
-                'user_id' => $teacher_id[0]->id,
-                'date' => $this->filter->date,
-                'time' => $time,
-                'reason' => $this->filter->reason
-            ]);
+        if (($this->filter->teacher == null || $this->filter->teacher == "") || ($this->filter->date == null || $this->filter->date == "") || ($this->times == null || $this->times == "")) {
+            $this->filter->teacher = null;
+            $this->filter->date = null;
+            $this->times =  [];
+            $this->inserterror = true;
+            $this->closeCreateAdminAbsence();
+        }else{
+            $teacher_id = DB::table('users')->where("name", "=", $this->filter->teacher)->select("id")->get();
+            
+    
+            foreach ($this->times as $time) {
+                Absence::create([
+                    'user_id' => $teacher_id[0]->id,
+                    'date' => $this->filter->date,
+                    'time' => $time,
+                    'reason' => $this->filter->reason
+                ]);
+            }
+            $this->absences = $this->allcolumnsquery()->where('date', '=', date('Y/m/d'))->get();
+            $this->closeCreateAdminAbsence();
+            $this->created = true;
         }
-        $this->absences = $this->allcolumnsquery()->where('date', '=', date('Y/m/d'))->get();
-        $this->closeCreateAdminAbsence();
-        $this->created = true;
+        
     }
 }
