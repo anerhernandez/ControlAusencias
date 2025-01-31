@@ -1,6 +1,8 @@
 <div class="text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px]">
     <div class=" text-gray-900 dark:text-gray-100 text-center"> 
-        <button wire:click="openCreateAbsence" class="btn-default overflow-hidden relative bg-sky-300 text-gray-900 p-2 mb-5 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-neutral-100 hover:bg-gradient-to-t hover:from-sky-400 before:to-sky-50 0 dark:border-gray-700 hover:-translate-y-[3px]">Añadir una falta</button>
+        <button wire:click="openCreateAbsence" class="btn-default overflow-hidden relative bg-sky-300 text-gray-900 p-2 mb-5 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-neutral-100 hover:bg-gradient-to-t hover:from-sky-400 before:to-sky-50 0 dark:border-gray-700 hover:-translate-y-[3px]">
+            Añadir falta/s
+        </button>
         <form wire:submit="submitform" action="#">
             <div id="Inputs" class="flex justify-evenly p-10">
                 <div class="text-center">
@@ -42,6 +44,9 @@
         @endif
         @if ($inserterror)
         <p class="mb-6 text-red-600">Rellene todos los campos para insertar ausencias</p>   
+        @endif
+        @if ($date_error)
+        <p class="mb-6 text-red-600">No se permite introducir fechas pasadas</p>   
         @endif
     </div>
     @if ($absences->isEmpty())
@@ -170,7 +175,7 @@
                         <div class="space-y-4 ">
                             <div class="text-center">
                                 <button wire:click="createAbsence" class="btn-default overflow-hidden relative bg-red-500 text-white p-2 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-red-500 dark:border-gray-700 hover:bg-gradient-to-t hover:from-red-400 before:to-red-700 hover:dark:from-red-700 before:dark:to-red-700 hover:-translate-y-[3px]">
-                                    Añadir falta
+                                    Añadir falta/s
                                 </button>
                                 <button wire:click="closeCreateAbsence" class="btn-default overflow-hidden relative bg-neutral-200 dark:bg-slate-600 dark:text-white text-gray-900 p-2 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-neutral-100 dark:border-gray-700 hover:bg-gradient-to-t hover:from-neutral-300 before:to-neutral-50 hover:dark:from-slate-600 before:dark:to-slate-700 hover:-translate-y-[3px]">
                                     Salir de añadir ausencia

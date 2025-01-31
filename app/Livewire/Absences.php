@@ -18,6 +18,9 @@ class Absences extends Component
     public $times = [];
     public $created = false;
     public $inserterror = false;
+    public $date_error = false;
+    public $expire = false;
+
     public $timerelations = [
         'M1' => '08:55',
         'M2' => '09:50',
@@ -62,6 +65,7 @@ class Absences extends Component
     public function allcolumnsquery()
     {
         $this->inserterror = false;
+        $this->date_error = false;
         return DB::table('users')
             ->join('absences', 'users.id', '=', 'absences.user_id')
             ->join('departments', 'users.department_id', '=', 'departments.id')
@@ -139,19 +143,25 @@ class Absences extends Component
             $this->inserterror = true;
             $this->closeCreateAbsence();
         }else{
-            foreach ($this->times as $time) {
-                Absence::create([
-                    'user_id' => Auth::id(),
-                    'date' => $this->filter->date,
-                    'time' => $time,
-                    'comment' => $this->filter->comment
-                ]);
+            if ($this->filter->date < date('Y-m-d')) {
+                $this->date_error = true;
+            }else{
+                foreach ($this->times as $time) {
+                    Absence::create([
+                        'user_id' => Auth::id(),
+                        'date' => $this->filter->date,
+                        'time' => $time,
+                        'comment' => $this->filter->comment
+                    ]);
+                }
+                $this->absences = $this->getCurrentAbsences();
+                $this->closeCreateAbsence();
+                $this->filter->time = $this->currenttime();
+                $this->created = true;
             }
-            $this->absences = $this->getCurrentAbsences();
-            $this->closeCreateAbsence();
-            $this->filter->time = $this->currenttime();
-            $this->created = true;
         }
+        $this->closeCreateAbsence();
+        
     }
     public function editabsence(){
 

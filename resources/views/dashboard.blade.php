@@ -15,7 +15,7 @@
                     @endrole
                     <!--VISTA NORMAL -->
                     @role('teacher')
-                    @livewire('absences')
+                        @livewire('absences')
                     @endrole
                 </div>
             </div>
