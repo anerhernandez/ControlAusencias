@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use App\Livewire\Forms\Filter;
 use App\Models\Absence;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -20,6 +22,7 @@ class Absences extends Component
     public $inserterror = false;
     public $date_error = false;
     public $expire = false;
+    public $openSedit = false;
 
     public $timerelations = [
         'M1' => '08:55',
@@ -78,7 +81,8 @@ class Absences extends Component
                 'departments.dp_name as department_name',
                 'absences.date',
                 'absences.time',
-                'absences.comment'
+                'absences.comment',
+                'absences.created_at'
             );
     }
     //Mount
@@ -163,9 +167,6 @@ class Absences extends Component
         $this->closeCreateAbsence();
         
     }
-    public function editabsence(){
-
-    }
     //Function to show specific absence
     public function showspecificabsence($absence_id)
     {
@@ -216,5 +217,40 @@ class Absences extends Component
                     $this->clearfields();
                 break;
             }
+    }
+    public function expiration ($hora){
+        $fecha_insercion = Carbon::parse($hora);
+        // Añadirle 10 minutos
+        $diez_min_despues = $fecha_insercion->addMinutes(10);
+        if (Carbon::now()->greaterThanOrEqualTo($diez_min_despues)) {
+            //No se puede editar, han pasado mas de 10 minutos
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function openSelfEditAbsence($absence){
+        $this->closeDetailsModal();
+        $this->openSedit = true;
+    }
+    public function closeSelfEditAbsence(){
+        $this->openSedit = false;
+    }
+    public function editSelfAbsence($absence){
+
+
+        // Absence::where('id', $id)->update([
+        //     'date' => $newDate,
+        //     'time' => $newTime,
+        //     'comment' => $newComment
+        // ]);
+        $this->closeDetailsModal();
+    }
+
+
+    public function deleteSelfAbsence($absence){
+
     }
 }
