@@ -211,16 +211,16 @@
         </div>
     @else
         <div class="text-center">
-            <form action="" >
+            <form action="">
 
                 <label for="tname">Nombre de profesor</label><br>
-                <input type="text" name="tname" id="tname" wire:model="teacher_name" class="bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]"><br><br>
+                <input type="text" name="tname" id="tname" wire:model="teacher_name" class="text-center bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]"><br><br>
                 
                 <label for="tname">Email de profesor</label><br>
-                <input type="text" name="tname" id="tname" wire:model="teacher_email" class="bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]"><br><br>
+                <input type="text" name="tname" id="tname" wire:model="teacher_email" class="w-[20%] text-center bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]"><br><br>
 
                 <label for="tname">Departanmento</label><br>
-                <select name="tname" id="tname" wire:model="teacher_dp" class="bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]">
+                <select name="tname" id="tname" wire:model="teacher_dp" class="text-center bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]">
                     <option selected>Departamento</option>
                     @foreach ($this->departments as $department)
                         <option value="{{$department->id}}">{{$department->dp_name}}</option>
