@@ -5,6 +5,7 @@
         <button wire:click="viewaddteachers">Añadir profesores</button>
     </div>
     @if ($this->view_admin)
+    <!--Admin view-->
         <div>
             <div class="text-center">
                 <h2 class=" text-[12px] md:text-[14px] lg:text-[16px] xl:text-[18px] 2xl:text-[22px]">ESTO ES UNA VISTA PRIVADA QUE SOLO VERÁ EL <b class="text-red-500">ADMINISTRADOR</b></h2>
@@ -210,6 +211,7 @@
             @endif
         </div>
     @else
+    <!--Admin view (Insert teacher)-->
         <div class="text-center">
             <form action="">
 
