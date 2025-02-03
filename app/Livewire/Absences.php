@@ -5,7 +5,6 @@ namespace App\Livewire;
 use App\Livewire\Forms\Filter;
 use App\Models\Absence;
 use Carbon\Carbon;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -23,6 +22,11 @@ class Absences extends Component
     public $date_error = false;
     public $expire = false;
     public $openSedit = false;
+    public $edited = false;
+    public $editdate;
+    public $edittime;
+    public $editcomment;
+    public $deleted = false;
 
     public $timerelations = [
         'M1' => '08:55',
@@ -92,6 +96,8 @@ class Absences extends Component
         $this->filter->time = $this->currenttime();
         $this->filter->date = date('Y-m-d');
         $this->created = false;
+        $this->edited = false;
+        $this->deleted = false;
     }
     //Returns all current (this day and time) absences
     public function getCurrentAbsences(){
@@ -106,6 +112,9 @@ class Absences extends Component
         $this->clearfields();
         $this->filter->time = $this->currenttime();
         $this->filter->date = date('Y-m-d');
+        $this->created = false;
+        $this->edited = false;
+        $this->deleted = false;
     }
     //Clears searching fields
     public function clearfields(){
@@ -122,7 +131,6 @@ class Absences extends Component
     public function closeDetailsModal()
     {
         $this->details_modal = false;
-        $this->absence = null;
     }
     //Open and close create foreign absence
     public function openCreateAbsence()
@@ -137,6 +145,8 @@ class Absences extends Component
         $this->filter->time = $this->currenttime();
         $this->filter->date = date('Y-m-d');
         $this->times = [];
+        $this->created = false;
+        $this->edited = false;
     }
     public function createAbsence()
     {
@@ -161,10 +171,14 @@ class Absences extends Component
                 $this->absences = $this->getCurrentAbsences();
                 $this->closeCreateAbsence();
                 $this->filter->time = $this->currenttime();
+                $this->filter->comment = "";
                 $this->created = true;
             }
         }
         $this->closeCreateAbsence();
+        $this->created = false;
+        $this->edited = false;
+        $this->deleted = false;
         
     }
     //Function to show specific absence
@@ -217,6 +231,9 @@ class Absences extends Component
                     $this->clearfields();
                 break;
             }
+        $this->created = false;
+        $this->edited = false;
+        $this->deleted = false;
     }
     public function expiration ($hora){
         $fecha_insercion = Carbon::parse($hora);
@@ -231,26 +248,41 @@ class Absences extends Component
     }
 
 
-    public function openSelfEditAbsence($absence){
-        $this->closeDetailsModal();
+    public function openSelfEditAbsence(){
         $this->openSedit = true;
     }
     public function closeSelfEditAbsence(){
         $this->openSedit = false;
+        $this->created = false;
+        $this->edited = false;
+        $this->deleted = false;
     }
-    public function editSelfAbsence($absence){
+    public function editSelfAbsence(){
 
-
-        // Absence::where('id', $id)->update([
-        //     'date' => $newDate,
-        //     'time' => $newTime,
-        //     'comment' => $newComment
-        // ]);
+        Absence::where('id', $this->absence[0]->absence_id)
+        ->update([
+            'date' => $this->editdate,
+            'time' => $this->edittime,
+            'comment' => $this->editcomment
+        ]);
+        $this->absences = $this->allcolumnsquery()
+                    ->where('date', $this->editdate)
+                    ->where('time', $this->edittime)
+                    ->get();
+        $this->edited = true;
+        $this->closeSelfEditAbsence();
         $this->closeDetailsModal();
+        $this->created = false;
+        $this->edited = false;
+        $this->deleted = false;
     }
 
 
-    public function deleteSelfAbsence($absence){
+    public function deleteSelfAbsence(){
+        Absence::where('id', $this->absence[0]->absence_id)->delete();
+        $this->closeDetailsModal();
+        $this->absences = $this->getCurrentAbsences();
+        $this->deleted = true;
 
     }
 }

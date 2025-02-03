@@ -48,6 +48,12 @@
         @if ($date_error)
         <p class="mb-6 text-red-600">No se permite introducir fechas pasadas</p>   
         @endif
+        @if ($edited)
+        <p class="mb-6 text-yellow-600">Ausencia actualizada</p>   
+        @endif
+        @if ($deleted)
+        <p class="mb-6 text-red-600">Ausencia <b>eliminada</b></p>   
+        @endif
     </div>
     @if ($absences->isEmpty())
         <p colspan="4">No se han encontrado ausencias</p>
@@ -198,6 +204,7 @@
         </div>
     @endif
     @if ($openSedit)
+    
         <div class="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 py-10">
             <div class="max-h-full w-full lg:max-w-xl lg:p-0 px-10 max-w-fit overflow-y-auto sm:rounded-2xl dark:bg-slate-800 bg-gray-100">
                 <div class="w-full">
@@ -208,7 +215,7 @@
                                 <div class="text-center w-full">
                                     <label for="time">Hora</label><br>
                                     <div id="time" name="time" class="">
-                                        <select id="time" name="time" wire:model="{{$absence->time}}" class="bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]">
+                                        <select id="time" name="time" wire:model='edittime' class="bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]">
                                             <option value={{null}}>Filtrar por hora</option>
                                             <option value="M1">M1 (Mañana)</option>
                                             <option value="M2">M2 (Mañana)</option>
@@ -228,16 +235,17 @@
                                     </div>
                                     <br><br>
                                     <label for="date">Fecha</label><br>
-                                    <input required type="date" id="date" name="date" wire:model="filter.date"  class="bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]">
+                                    <input required type="date" id="date" name="date" wire:model='editdate'  class="bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]">
                                     <br><br>
                                     <label for="comentario">Comentario</label><br>
-                                    <textarea id="comentario" name="comentario" wire:model="filter.comment" placeholder="Comentario que dejar al profesor de guardia" class="w-full bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]"></textarea>
+                                    
+                                    <textarea id="comentario" name="comentario" wire:model='editcomment' placeholder="Comentario que dejar al profesor de guardia" class="w-full bg-neutral-50 text-[7px] md:text-[10px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] dark:bg-slate-600 dark:text-white text-gray-900 p-1 rounded-lg transition-all duration-100 -- hover:shadow-md border border-neutral-200 dark:border-gray-700 hover:dark:from-slate-900 before:dark:to-slate-700 hover:-translate-y-[3px]"></textarea>
                                 </div>
                             </div>
                         </form>
                         <div class="space-y-4 ">
                             <div class="text-center">
-                                <button wire:click="" class="btn-default overflow-hidden relative bg-yellow-500 text-white p-2 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-yellow-500 dark:border-gray-700 hover:bg-gradient-to-t hover:from-yellow-400 before:to-yellow-700 hover:dark:from-yellow-700 before:dark:to-yellow-700 hover:-translate-y-[3px]">
+                                <button wire:click="editSelfAbsence" class="btn-default overflow-hidden relative bg-yellow-500 text-white p-2 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-yellow-500 dark:border-gray-700 hover:bg-gradient-to-t hover:from-yellow-400 before:to-yellow-700 hover:dark:from-yellow-700 before:dark:to-yellow-700 hover:-translate-y-[3px]">
                                     Editar falta
                                 </button>
                                 <button wire:click="closeSelfEditAbsence" class="btn-default overflow-hidden relative bg-neutral-200 dark:bg-slate-600 dark:text-white text-gray-900 p-2 rounded-lg font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-neutral-100 dark:border-gray-700 hover:bg-gradient-to-t hover:from-neutral-300 before:to-neutral-50 hover:dark:from-slate-600 before:dark:to-slate-700 hover:-translate-y-[3px]">
