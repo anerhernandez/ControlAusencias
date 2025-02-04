@@ -4,10 +4,10 @@ namespace App\Livewire;
 
 use App\Livewire\Absences;
 use App\Models\Absence;
-use App\Models\Department;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class AbsencesAdminView extends Absences
 {
@@ -120,12 +120,18 @@ class AbsencesAdminView extends Absences
             if($this->teacher_dp == 1){
                 $this->admininserted = true;
             }
-            User::create([
+            User::updateOrInsert([
+                'email' => $this->teacher_email
+            ],[
                 'name' => $this->teacher_name,
                 'email' => $this->teacher_email,
                 'password' => Hash::make('D3f_aUlT_/7pA$S$W0r*D'),
                 'department_id' => $this->teacher_dp
             ]);
+            $restofTeachers = User::where('id', '!=' , 1)->get();
+            foreach ($restofTeachers as $teacher) {
+                $teacher->assignRole("teacher");
+            }
             $this->teacher_name = null;
             $this->teacher_email = null;
             $this->teacher_dp = null;

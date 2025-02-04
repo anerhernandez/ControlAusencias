@@ -258,7 +258,7 @@ class Absences extends Component
         $this->deleted = false;
     }
     public function editSelfAbsence(){
-
+        
         Absence::where('id', $this->absence[0]->absence_id)
         ->update([
             'date' => $this->editdate,
