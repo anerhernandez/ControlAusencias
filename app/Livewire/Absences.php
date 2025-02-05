@@ -3,10 +3,12 @@
 namespace App\Livewire;
 
 use App\Livewire\Forms\Filter;
+use App\Mail\MailerAusencia;
 use App\Models\Absence;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class Absences extends Component
@@ -167,6 +169,13 @@ class Absences extends Component
                         'time' => $time,
                         'comment' => $this->filter->comment
                     ]);
+                    $ausencia = new Absence([
+                        'user_id' => Auth::id(),
+                        'date' => $this->filter->date,
+                        'time' => $time,
+                        'comment' => $this->filter->comment
+                    ]);
+                    Mail::to('pruebalaravel9@gmail.com')->send(new MailerAusencia($ausencia));
                 }
                 $this->absences = $this->getCurrentAbsences();
                 $this->closeCreateAbsence();
